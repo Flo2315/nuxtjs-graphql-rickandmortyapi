@@ -1,5 +1,12 @@
 <template>
-  <div class="container m-auto mt-8">
+  <div class="container m-auto mt-8 transition">
+    <div class="text-center mb-6">
+      <h3
+        class="text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10"
+      >
+        List of characters
+      </h3>
+    </div>
     <div class="grid grid-flow-row-dense grid-cols-3 gap-4">
       <template v-for="character in characters.results">
         <CharacterCard :key="character.id" :character="character" />

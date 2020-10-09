@@ -1,5 +1,12 @@
 <template>
-  <div class="container m-auto mt-8">
+  <div class="container m-auto mt-8 transition">
+    <div class="text-center mb-6">
+      <h3
+        class="text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10"
+      >
+        Character detail
+      </h3>
+    </div>
     <div class="flex items-center items-stretch mb-8">
       <div class="w-1/2 mr-1">
         <CharacterCard :character="character" :link-more="false" />
@@ -36,7 +43,7 @@
                     date
                   </th>
                   <th
-                    class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                    class="hidden md:block px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
                   >
                     Other characters
                   </th>
@@ -64,7 +71,7 @@
                       {{ episode.air_date }}
                     </div>
                   </td>
-                  <td class="px-6 py-4 whitespace-no-wrap">
+                  <td class="hidden md:block px-6 py-4 whitespace-no-wrap">
                     <div class="flex overflow-hidden">
                       <nuxt-link
                         v-for="(character, index) in lastCharacters(
