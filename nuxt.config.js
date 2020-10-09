@@ -1,7 +1,7 @@
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'nuxt-graphql',
+    title: 'Rick and morty - Explore API GraphQL',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -37,6 +37,10 @@ export default {
         httpEndpoint: 'https://rickandmortyapi.com/graphql/',
       },
     },
+  },
+
+  router: {
+    linkActiveClass: 'text-white bg-gray-900',
   },
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {},

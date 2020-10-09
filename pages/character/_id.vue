@@ -80,6 +80,7 @@
                         :key="character.id"
                         :to="`/character/${character.id}`"
                         :class="{ '-ml-1': index > 0 }"
+                        active-class=""
                       >
                         <img
                           class="inline-block h-8 w-8 rounded-full text-white shadow-solid"

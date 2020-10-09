@@ -23,29 +23,80 @@
               <h2
                 class="text-4xl tracking-tight leading-10 font-extrabold text-gray-900 sm:text-5xl sm:leading-none md:text-6xl"
               >
-                Rick and morty API
+                Rick and morty - Explore API
                 <br />
-                <span class="text-4xl text-teal-600"
-                  >Nuxtjs - graphql project</span
-                >
+                <span class="text-4xl text-teal-600">Nuxt.js - GraphQL</span>
               </h2>
               <p
                 class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0"
               >
-                This project uses data from the API
-                <a href="https://rickandmortyapi.com/" class="text-teal-600"
+                This project uses data from the GraphQL API
+                <a
+                  href="https://rickandmortyapi.com/graphql/"
+                  target="blank"
+                  class="text-teal-600"
                   >rickandmortyapi</a
                 >
               </p>
+              <div>
+                <multiselect
+                  v-model="selectedCharacter"
+                  label="name"
+                  track-by="name"
+                  placeholder="Search a character"
+                  open-direction="bottom"
+                  :options="optionsCharacters"
+                  :loading="isLoading"
+                  :searchable="true"
+                  :multiple="false"
+                  :internal-search="false"
+                  :clear-on-select="true"
+                  :close-on-select="true"
+                  :max-height="300"
+                  :hide-selected="true"
+                  :show-no-results="true"
+                  class="mt-10"
+                  @search-change="asyncFind"
+                  @select="redirect"
+                >
+                  <template slot="option" slot-scope="props"
+                    ><img
+                      class="option__image inline-block"
+                      :src="props.option.image"
+                      alt="No Man’s Sky"
+                      width="50"
+                    />
+                    <div class="option__desc inline-block">
+                      <span class="option__title">{{ props.option.name }}</span>
+                    </div>
+                  </template>
+                  <span slot="noResult"
+                    >Oops! No elements found. Consider changing the search
+                    query.</span
+                  >
+                </multiselect>
+              </div>
               <p
                 class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0"
               >
-                Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui
-                lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat
-                fugiat aliqua.
+                Use the select above to search for a character from Rick and
+                Morty<br />
+                You can explore the other pages with the menu at the top to
+                discover all the characters of Ricky Morty as well as the
+                episodes
+              </p>
+              <p
+                class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0 text-center"
+              >
+                <a
+                  href="https://github.com/Flo2315"
+                  target="blank"
+                  class="text-teal-600"
+                  >GitHub</a
+                >
               </p>
               <div
-                class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start h-32"
+                class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start lg:h-32"
               ></div>
             </div>
           </main>
@@ -63,6 +114,9 @@
 </template>
 
 <script>
+import gql from 'graphql-tag'
+import Multiselect from 'vue-multiselect'
+
 export default {
   transition(to, from) {
     if (!from) {
@@ -70,5 +124,52 @@ export default {
     }
     return +to.params.page < +from.params.page ? 'slide-right' : 'slide-left'
   },
+  components: { Multiselect },
+  data() {
+    return {
+      selectedCharacter: {},
+      optionsCharacters: [],
+      isLoading: false,
+    }
+  },
+  methods: {
+    async asyncFind(query) {
+      if (query.length === 0) {
+        this.optionsCharacters = []
+        return
+      }
+
+      this.isLoading = true
+      const result = await this.$apollo
+        .query({
+          query: gql`
+            query getCharacters($filter: FilterCharacter) {
+              characters(filter: $filter) {
+                results {
+                  id
+                  name
+                  image
+                }
+              }
+            }
+          `,
+          variables: {
+            filter: { name: query },
+          },
+        })
+        .catch((e) => {
+          this.isLoading = false
+          this.optionsCharacters = []
+        })
+
+      if (result) this.optionsCharacters = result.data.characters.results
+      this.isLoading = false
+    },
+    redirect(selectedOption) {
+      this.$router.push(`/character/${selectedOption.id}`)
+    },
+  },
 }
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

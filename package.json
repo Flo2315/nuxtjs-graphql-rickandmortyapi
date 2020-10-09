@@ -15,7 +15,8 @@
     "core-js": "^3.6.5",
     "graphql-tag": "^2.11.0",
     "nuxt": "^2.14.6",
-    "vue-infinite-loading": "^2.4.5"
+    "vue-infinite-loading": "^2.4.5",
+    "vue-multiselect": "^2.1.6"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^3.1.0",
