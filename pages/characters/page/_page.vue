@@ -1,5 +1,5 @@
 <template>
-  <div class="container m-auto mt-8 transition">
+  <div class="container m-auto mt-8 page-transition px-2">
     <div class="text-center mb-6">
       <h3
         class="text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10"

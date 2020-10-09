@@ -1,5 +1,5 @@
 <template>
-  <div class="transition">
+  <div class="page-transition">
     <div class="relative bg-white overflow-hidden">
       <div class="max-w-screen-xl mx-auto">
         <div
