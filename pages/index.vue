@@ -48,7 +48,6 @@
                   :options="optionsCharacters"
                   :loading="isLoading"
                   :searchable="true"
-                  :multiple="false"
                   :internal-search="false"
                   :clear-on-select="true"
                   :close-on-select="true"
@@ -70,6 +69,9 @@
                       <span class="option__title">{{ props.option.name }}</span>
                     </div>
                   </template>
+                  <span slot="noOptions">
+                    List is empty, typing for search...
+                  </span>
                   <span slot="noResult"
                     >Oops! No elements found. Consider changing the search
                     query.</span
@@ -79,10 +81,11 @@
               <p
                 class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0"
               >
-                Use the select above to search for a character from Rick and
-                Morty<br />
+                Use the select above by typing the name of the character that
+                you want to search.
+                <br />
                 You can explore the other pages with the menu at the top to
-                discover all the characters of Ricky Morty as well as the
+                discover all the characters of Ricky and Morty as well as the
                 episodes
               </p>
               <p
@@ -127,7 +130,7 @@ export default {
   components: { Multiselect },
   data() {
     return {
-      selectedCharacter: {},
+      selectedCharacter: null,
       optionsCharacters: [],
       isLoading: false,
     }
